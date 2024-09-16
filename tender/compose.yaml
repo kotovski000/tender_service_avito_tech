@@ -1,0 +1,21 @@
+services:
+  web:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "${SERVER_ADDRESS}:${SERVER_ADDRESS}"
+    command: go run cmd/main.go
+  datab:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+volumes:
+  postgres-db: 
